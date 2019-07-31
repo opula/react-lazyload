@@ -26,7 +26,8 @@ try {
 catch (e) { }
 // if they are supported, setup the optional params
 // IMPORTANT: FALSE doubles as the default CAPTURE value!
-const passiveEvent = passiveEventSupported ? { capture: false, passive: true } : false;
+// const passiveEvent = passiveEventSupported ? { capture: false, passive: true } : false;
+const passiveEvent = passiveEventSupported ? { capture: true, passive: false } : false;
 
 
 /**
@@ -199,6 +200,8 @@ class LazyLoad extends Component {
     if (scrollContainer) {
       if (isString(scrollContainer)) {
         scrollport = scrollport.document.querySelector(scrollContainer);
+      } else {
+        scrollport = scrollContainer;
       }
     }
     const needResetFinalLazyLoadHandler = (this.props.debounce !== undefined && delayType === 'throttle')
@@ -240,6 +243,7 @@ class LazyLoad extends Component {
 
       if (scroll) {
         on(scrollport, 'scroll', finalLazyLoadHandler, passiveEvent);
+        // on(scrollport, 'scroll', function() { console.log('scrollin') }, passiveEvent);
       }
 
       if (resize) {
